@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Character } from "../hooks/useCharacters";
 import { motion } from "framer-motion";
+import ScoreBoard from "./ScoreBoard";
 function Grid({
   loading,
   characters,
@@ -15,11 +16,14 @@ function Grid({
   useEffect(() => {});
 
   function handlePick(id: string) {
-    if (picked.includes(id) || picked.length === 12) {
+    if (picked.includes(id)) {
       return setGameEnded(true);
     }
     setPicked([...picked, id]);
     setShuffled(shuffled.toSorted(() => Math.random() - 0.5));
+    if (picked.length === 11) {
+      setGameEnded(true);
+    }
   }
 
   useEffect(() => {
@@ -57,6 +61,7 @@ function Grid({
               );
             })}
           </div>
+          {gameEnded && <ScoreBoard {...{ picked, setGameEnded, setPicked }} />}
         </>
       )}
     </>
