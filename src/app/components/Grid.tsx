@@ -3,6 +3,12 @@ import Image from "next/image";
 import { Character } from "../hooks/useCharacters";
 import { motion } from "framer-motion";
 import ScoreBoard from "./ScoreBoard";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 function Grid({
   loading,
   characters,
@@ -36,27 +42,36 @@ function Grid({
       ) : (
         <>
           <h1 className="text-6xl font-bold text-center">{picked.length}</h1>
-          <div className="grid sm:grid-cols-4 grid-cols-2 w-dvw overflow-hidden">
+          <div className="py-8 flex flex-wrap overflow-hidden ">
             {shuffled.map((character) => {
               return (
                 <motion.div
                   layout
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.8 }}
                   transition={{
                     type: "spring",
                     stiffness: 300,
-                    damping: 20,
+                    damping: 25,
                     mass: 2,
                     velocity: 2,
                   }}
-                  className="relative  aspect-video border border-black shadow rounded-md"
+                  className="basis-1/2 md:basis-1/4 flex-grow-0 cursor-pointer ring-white md:hover:ring-2 md:hover:z-50 relative  aspect-video border border-black shadow rounded-md"
                   key={character.id}
                   onClick={() => handlePick(character.id)}
                 >
-                  <Image
-                    src={URL.createObjectURL(character.image)}
-                    alt="image"
-                    fill
-                  />
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <Image
+                          src={URL.createObjectURL(character.image)}
+                          alt="image"
+                          fill
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>{character.name}</TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </motion.div>
               );
             })}

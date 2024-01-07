@@ -7,10 +7,11 @@ function Start({ loading, progress }: { loading: boolean; progress: number }) {
       {open && (
         <div className="bg-zinc-900 z-50 flex flex-col fixed top-0 left-0 right-0 bottom-0 w-dvw h-dvh items-center justify-center">
           <h1 className="text-3xl">{"Don't pick twice"}</h1>
-          <div className="m-2  max-w-[75%]">
+          <div className="m-2  max-w-[75%] text-center break-normal">
             This is a game to test you memory. when you press the start button,
             a grid of 12 cards will appear, and you need to click all the cards,
-            but if you pick the same card twice, you lose.
+            but the cards will rearrange each time you click them and if you
+            pick the same card twice, you lose.
           </div>
           <div className="w-full max-w-[85%] bg-gray-200 rounded-full dark:bg-gray-700">
             <motion.div
